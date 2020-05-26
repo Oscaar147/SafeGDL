@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+*{
+	box-sizing: border-box;
+}
+h1,h2,h4,h5,h6 {
+	text-transform: uppercase;
+	color: #444;
+	font-family: rale;
+	letter-spacing: 1px;
+}
+h2{
+	font-size: 26px;
+	color: #333;
+
+}
+h3{
+	font-family: 'Lato', sans-serif;
+	font-size: 20px;
+	line-height: 1.5;
+	padding-top: 20px;
+	font-weight: normal;
+	color: #777;
+	text-align: center;
+}
+h4{
+	margin-top: 15px;
+	font-size: 16px; 
+}
+h5{
+	font-family: lato, sans-serif;
+	line-height: 1.5;
+	font-weight: normal;
+	padding: 10px 0;
+	font-size: 12px;
+
+}
+p{
+	color: #888;
+	font-family: lato, sans-serif;
+	font-size: 15px;
+}
+.wap{
+	width: 90%;
+	margin: auto;
+}
+.bienvenido{
+		margin-top: 50px;
+		text-align: center;
+}
+.contenedor-columnas{
+	width: 100%;
+	margin: auto;
+	margin-bottom: 50px;
+	
+}
+.columnax3{
+	width: 33.333%;
+	float: left;
+	padding: 20px 20px;
+	box-sizing: border-box;
+	margin: auto;
+}
+.columnax3 img{
+	width: 85%;
+	height: 240px;
+}
+.banner1{
+	width: 100%;
+	background: #1ABC9C;
+	clear: both;
+	padding-top: 30px;
+	padding-left: 50px;
+	padding-right: 50px;
+	padding-bottom: 50px;
+	margin: auto;
+	text-align: center;
+	transition: 0.4s;
+}
+.banner1:hover{
+	background: #444;
+	transition: 0.4s;
+}
+.banner1 h3{
+	color: #fff;
+	font-size: 32px;
+}
+.banner1 a{
+	text-decoration: none;
+	margin-left:  20px;
+	font-weight: bold;
+	color: #fff;
+	border-bottom: 2px solid #fff;
+}
+.columnax3 i{
+	float: left; 
+	padding-right: 20px;
+	color: #444;
+}
+.columnax3 h4{
+	padding-bottom: 20px;
+
+}
+.banner2{
+	margin-top: 70px;
+	background: url(imagenes/IMG.jpg);
+	float: left;
+	width: 100%;
+	height: 200px;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+	text-align: center;
+
+}
+.banner2 h3{
+	background: rgba(0,0,0,.5);
+	color: #fff;
+	font-size: 32px;
+	height: 100%;
+	padding-top: 12%;
+}
+.banner2 a{
+	text-decoration: none;
+	margin-left:  20px;
+	font-weight: bold;
+	color: #fff;
+	border-bottom: 2px solid #fff;
+}

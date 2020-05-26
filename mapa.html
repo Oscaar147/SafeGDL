@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-auth.js"></script>
+<script src="js/mapa.js"></script>
+
+	<title>Crear Reporte</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="slide.css">
+	<link rel="stylesheet" href="animate.css">
+	<link rel="stylesheet" href="mapa.css">
+	<script src="js/reportes.js"></script>
+</head>
+<body >
+<header>
+	<div class="ancho">
+
+		<div class="logo">
+			<p><a href="index.html">Bsafe</a></p>
+	    </div>
+	    <nav>
+	    	<ul>
+	    		<li><a href="inicio.html">Inicio</a></li>
+				  <li><a href="mapa.html">Mapa </a></li>
+				  <li><a href="reportes.html">Denuncias</a></li>
+	    		<li><a href="ayuda.html">Numeros Emergencia</a></li>
+	    	</ul>
+	    </nav>
+
+	</div>
+
+</header>
+<div class="ancho-letras">
+	<div class="letras-slider">
+		<br><br>
+		<br><br>
+		<br>
+	<h1 class="animated zoomIn"> Find your Route</h1>
+	</div>
+</div>
+<div id="particles-js"></div>
+<br>
+<br>
+<br>
+
+
+	
+<div >
+	<input id="origin-input" class="controls" type="text"placeholder="Ingresa tu Origen">
+
+    <input id="destination-input" class="controls" type="text"placeholder="Ingresa tu destino">
+
+    <div id="mode-selector" class="controls">
+    <input type="radio" name="type" id="changemode-walking" checked="checked">
+    <label for="changemode-walking">Walking</label>
+
+    <input type="radio" name="type" id="changemode-transit">
+    <label for="changemode-transit">Transit</label>
+    <input type="radio" name="type" id="changemode-driving">
+    <label for="changemode-driving">Driving</label>
+</div>
+    </div>
+	<div id="map"></div>
+ 
+	<script>
+		      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          mapTypeControl: false,
+          center: {lat:20.659643, lng:-103.324033},
+          zoom: 15
+        });
+      
+        new AutocompleteDirectionsHandler(map);
+      }
+      
+      /**
+       * @constructor
+       */
+      function AutocompleteDirectionsHandler(map) {
+        this.map = map;
+        this.originPlaceId = null;
+        this.destinationPlaceId = null;
+        this.travelMode = 'WALKING';
+        this.directionsService = new google.maps.DirectionsService;
+        this.directionsRenderer = new google.maps.DirectionsRenderer;
+        this.directionsRenderer.setMap(map);
+      
+        var originInput = document.getElementById('origin-input');
+        var destinationInput = document.getElementById('destination-input');
+        var modeSelector = document.getElementById('mode-selector');
+      
+        var originAutocomplete = new google.maps.places.Autocomplete(originInput);
+        // Specify just the place data fields that you need.
+        originAutocomplete.setFields(['place_id']);
+      
+        var destinationAutocomplete =
+            new google.maps.places.Autocomplete(destinationInput);
+        // Specify just the place data fields that you need.
+        destinationAutocomplete.setFields(['place_id']);
+      
+        this.setupClickListener('changemode-walking', 'WALKING');
+        this.setupClickListener('changemode-transit', 'TRANSIT');
+        this.setupClickListener('changemode-driving', 'DRIVING');
+      
+        this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
+        this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
+      
+        this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
+        this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(
+            destinationInput);
+        this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
+      }
+      
+      // Sets a listener on a radio button to change the filter type on Places
+      // Autocomplete.
+      AutocompleteDirectionsHandler.prototype.setupClickListener = function(
+          id, mode) {
+        var radioButton = document.getElementById(id);
+        var me = this;
+      
+        radioButton.addEventListener('click', function() {
+          me.travelMode = mode;
+          me.route();
+        });
+      };
+       
+      AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(
+          autocomplete, mode) {
+        var me = this;
+        autocomplete.bindTo('bounds', this.map);
+      
+        autocomplete.addListener('place_changed', function() {
+          var place = autocomplete.getPlace();
+      
+          if (!place.place_id) {
+            window.alert('Please select an option from the dropdown list.');
+            return;
+          }
+          if (mode === 'ORIG') {
+            me.originPlaceId = place.place_id;
+          } else {
+            me.destinationPlaceId = place.place_id;
+          }
+          me.route();
+        });
+      };
+      
+      AutocompleteDirectionsHandler.prototype.route = function() {
+        if (!this.originPlaceId || !this.destinationPlaceId) {
+          return;
+        }
+        var me = this;
+      
+        this.directionsService.route(
+            {
+              origin: {'placeId': this.originPlaceId},
+              destination: {'placeId': this.destinationPlaceId},
+              travelMode: this.travelMode
+            },
+            function(response, status) {
+              if (status === 'OK') {
+                me.directionsRenderer.setDirections(response);
+              } else {
+                window.alert('Directions request failed due to ' + status);
+              }
+            });
+      };
+      
+	</script>
+
+
+
+		<div class="AddReport">
+			<h3>¿Sufriste algun robo en los utimos dias? </h3>
+			<h3>ayuda a que las demas personas tengan mas cuidado</h3>
+			<button  onclick="window.location.href='reportes.html'" id="reporte">Hacer Denuncia</button>
+		</div>
++
+		<script src="js/particles.js"></script>
+		<script src="js/app.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script
+		<script src="js/alto.js"></script>	
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMkmpcK2Ic4SezUQrh6SRVrMO_IRL043o&libraries=places&callback=initMap"
+		async defer></script>
+		
+</body>
+
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+
+	<title>Encuentra tu ruta</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="slide.css">
+	<link rel="stylesheet" href="animate.css">
+    <link rel="stylesheet" href="mapa.css">
+    <link rel="stylesheet" href="reportes.css">
+    <!-- <script src="js/reportes.js"></script> -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-firestore.js"></script>
+
+
+</head>
+<body >
+<header>
+	<div class="ancho">
+
+		<div class="logo">
+			<p><a href="index.html">Bsafe</a></p>
+	    </div>
+	    <nav>
+	    	<ul>
+	    		<li><a href="inicio.html">Inicio</a></li>
+				<li><a href="mapa.html">Mapa </a></li>
+				<li><a href="reportes.html">Denuncias</a></li>
+	    		<li><a href="ayuda.html">Numeros Emergencia</a></li>
+	    	</ul>
+	    </nav>
+
+	</div>
+
+</header>
+<div class="ancho-letras">
+	<div class="letras-slider">
+		<br><br>
+		<br><br>
+		<br>
+	<h1 class="animated zoomIn"> Denuncias</h1>
+	</div>
+</div>
+<div id="particles-js"></div>
+		<div class="AddReport">
+			<h3>¿Sufriste algun robo en los utimos dias? </h3>
+			<h3>ayuda a que las demas personas tengan mas cuidado</h3>
+			<h3>¡REPORTALO!</h3>
+        </div>
+        <form class="info" id='form'>
+            <label for="titulo" class="titulo">Titulo</label>
+            <input type="text" id="titulo" placeholder="TITULO DEL ROBO">.
+
+            <label for="fecha" class="fecha">First Name</label>
+            <input type="date" id="fecha" placeholder="DD/MM/AAAA">.
+
+            <label for="hora" class="hora">Hora</label>
+            <input type="time" id="hora" placeholder="05:30 pm" >
+
+            <label for="dinero" class="monto">Monto Robado MNX.</label>
+            <input id="monto" type="number" placeholder="$500">
+
+            <label for="personas">Personas que te atacaron</label>
+            <input id="personas" type="number">
+
+            <label>¿Fuiste agredid@ fisica o verbalmete?</label>
+            <input type="text" id="agresion" >
+
+            <label>Escribe los detalles </label>
+            <input type="text" id="detalles" placeholder="¿Como fue?">
+            <h1>Selecciona la ruta exacta donde fuiste agredid@ o robad@ </h1>
+            
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMkmpcK2Ic4SezUQrh6SRVrMO_IRL043o&callback=initMap" async defer></script>
+            
+            <div id ="map"> </div> 
+            <button id="button" type="submit">Denunciar</button>
+        </form>
+        <script>
+            var robo;
+            function initMap() {
+                var myLatlng = {lat:20.659643, lng:-103.324033};
+        
+                var map = new google.maps.Map(
+                    document.getElementById('map'), {zoom: 15, center: myLatlng});
+        
+                // Create the initial InfoWindow.
+                var infoWindow = new google.maps.InfoWindow(
+                    {content: 'Click para seleccionar la ubicacion de tu robo', position: myLatlng});
+                infoWindow.open(map);
+        
+                // Configure the click listener.
+                map.addListener('click', function(mapsMouseEvent) {
+                  // Close the current InfoWindow.
+                  infoWindow.close();
+        
+                  // Create a new InfoWindow.
+                  infoWindow = new google.maps.InfoWindow({position: mapsMouseEvent.latLng});
+                  infoWindow.setContent(mapsMouseEvent.latLng.toString());
+                  infoWindow.open(map);
+                  robo = infoWindow.content;
+                  console.log(infoWindow);
+                });
+              }
+          
+
+    var firebaseConfig = {
+        apiKey: "AIzaSyBR3-GVVYCE_FjyLesuK5Xo1iUQlXMdMZw",
+        authDomain: "safegdl.firebaseapp.com",
+        databaseURL: "https://safegdl.firebaseio.com",
+        projectId: "safegdl",
+        storageBucket: "safegdl.appspot.com",
+        messagingSenderId: "875742101171",
+        appId: "1:875742101171:web:a28ef31b5b978aa021fac6",
+        measurementId: "G-314F7CHNRG"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+  
+var form = document.getElementById('form');
+form.addEventListener('submit', denunciar)
+
+var db = firebase.firestore();
+                        
+function denunciar(e){
+    e.preventDefault();
+    var title = document.getElementById("titulo").value;
+    var date = document.getElementById("fecha").value;
+    var time = document.getElementById("hora").value;
+    var stolenAmount = document.getElementById("monto").value;   
+    var people = document.getElementById("personas").value;
+    var aggressionType = document.getElementById("agresion").value;
+    var details = document.getElementById("detalles").value;
+    console.log("cordenadas");
+    console.log(robo);
+    
+            
+    if(title.length == 0 || date.length == 0 || time.length == 0 ||
+    stolenAmount.length == 0 || people.length == 0 || aggressionType.length == 0 ||
+    details.length == 0){
+        alert("Rellena todos los campos");
+        console.log("if");
+        
+    }else{  
+        db.collection("denuncias").add({  
+        title : title,
+        date : date,
+        time : time,
+        montoRobado : stolenAmount,
+        personas : people, 
+        tipoAgresion : aggressionType,
+        detalles : details,
+        coordenadas : robo 
+        
+    })
+    .then(function(docRef) {
+         console.log("Document written with ID: ", docRef.id);
+         alert("correct");
+     })
+     .catch(function(error) {
+      console.error("Error adding document: ", error);
+      alert('error')
+      });
+            
+    }
+ }
+</script>
+
+	
+		<script src="js/particles.js"></script>
+		<script src="js/app.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script
+
+
+</body>
+
+</html>

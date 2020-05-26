@@ -1,0 +1,35 @@
+#particles-js{
+	/*background: url("imagenes/guad.jpg");*/
+	background: gray;
+	background-position: center;
+	background-attachment: contain;
+	background-size: cover;
+	width: 100%;
+}
+
+.ancho-letras{
+top: 200px;
+position: absolute;
+width: 100%;
+text-align: center;
+z-index: 1; /*importancia del cuadro*/
+}
+
+.letras-slider{
+	width: 80%;	
+	margin: auto;
+	
+}
+
+.letras-slider h1{
+	color: #fff;
+	font-family: rale;
+	font-size: 60px;
+}
+
+.letras-slider p{
+	color: #fff;
+	font-family: rale;
+	font-size: 20px;
+	padding-top: 50px;
+}

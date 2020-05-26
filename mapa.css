@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css?family=Merienda+One&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Merienda+One|Quicksand&display=swap');
+*{
+	margin: 0;
+	padding: 0;
+	
+}
+/* .container-rute{
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	margin: auto;
+	margin-bottom: 50px;
+	align-items: center;
+}
+
+.origen{
+	display: flex;
+	flex-direction: column;
+	float: left;
+	width: 30%;
+	border-radius: 10px;
+	padding-right: 90px;
+	padding-left: 70px;
+	margin: auto;
+}
+.destino{
+	display: flex;
+	flex-direction: column;
+	float: left;
+	width: 30%;
+	border-radius: 10px;
+	margin: 0;
+	padding-right: 80px;
+
+}
+.button{
+	display: flex;
+	float: left;
+	width: 30%;
+	
+}
+#map {
+	margin: auto;
+	height: 600px;
+	width: 100%;
+	padding-right: 80px;
+}
+.map{
+	clear: both;
+	margin: 0;
+	padding-right: 80px;
+}
+label{
+	color: black;
+	margin: 3px;
+	font-family: 'Quicksand', sans-serif;
+
+}
+input {
+  width: 380px;
+  border-radius: 10px;
+  padding: 1em;
+}
+
+button{
+	background: purple;
+	color: white;
+	border-radius: 10px;
+	font-size: 1em;
+	width: 200px;
+	font-family: 'Quicksand', sans-serif;
+	padding: .8em;
+}
+.imagen{
+	padding-left: 70px;
+}
+.moreRutes h1{
+	padding-top: 20px;
+	margin: 2em;
+	text-align: center;
+	font-size: 1.5em;
+	font-family: 'Quicksand', sans-serif;
+} */
+#map {
+    width: 100%;
+    height: 500px;
+}
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+	  }
+
+.controls {
+        margin-top: 10px;
+        border: 1px solid transparent;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        height: 32px;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+#origin-input,
+#destination-input {
+    background-color: #fff;
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 300;
+    margin-left: 12px;
+    padding: 0 11px 0 13px;
+    text-overflow: ellipsis;
+    width: 300px;
+}
+
+#origin-input:focus,
+#destination-input:focus {
+border-color: #4d90fe;
+}
+
+#mode-selector {
+    color: #fff;
+    background-color: #4d90fe;
+    margin-left: 12px;
+    padding: 5px 11px 0px 11px;
+}
+
+#mode-selector label {
+    font-family: Roboto;
+    font-size: 13px;
+    font-weight: 300;
+}
+h3{
+    font-family: 'Quicksand', sans-serif;
+    font-size: 17px;
+	margin: auto;
+	margin-top: 30px;
+	color: red;
+	text-align: center;
+}
+	  
+button{
+    font-family: 'Quicksand', sans-serif;
+    font-size: 19px;
+	margin: auto;
+	margin-top: auto;
+	border-color: blue;
+	color: blue ;
+	border-radius: 20px;
+	margin-top: 3em;
+	margin-left: 29em;
+	float: none;
+	text-align: center;
+	height: 3em;
+	width: 12em;
+	text-overflow: ellipsis;
+}

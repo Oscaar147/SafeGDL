@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Login</title>
+   
+	
+	<link rel="stylesheet" type="text/css" href="login.css">
+	<link rel="stylesheet" type="text/css" href="secciones.css">
+	
+	
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	
+	<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-auth.js"></script>
+
+
+</head>	
+<body>
+<div class="container-login">
+		<form id="form-autentification">
+		<div class="center">
+		
+			<div class="title">
+				 <h1>Iniciar sesión</h1>
+			</div>
+			 <div class="imagen">
+			 <img src="imagenes/user.png" ></img>
+			 </div>
+			 <div class="email">
+			 	 <label for="email">Email:</label>
+			 	<input type="email"  id="email" name="email">
+			 </div>
+			 <div class="password">	 	 
+  	         	<label for="password">Password:</label>
+  	         	<input type="password"  id="password" name="password">
+			 </div>
+			
+			<div class="button">
+				<button class="btn btn-primary" id="button" type="submit">Ingresar</button>
+				<a href="recuperarpassword.html">Olvidaste tu contraseña?</a>
+				<a href="registro.html">Registrate</a>
+			</div>
+			</form>	 
+		</div>
+
+	</div>
+	
+
+
+
+<!-- The Modal -->
+<div class="modal" id="errormodal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Error</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <p>Credenciales Incorrectas</p>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="errormodalvacio">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Rellene los campos</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <p>Se a producido un error</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+  <!-- Modal footer -->
+  <div class="modal-footer">
+     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+  </div>
+	<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyBR3-GVVYCE_FjyLesuK5Xo1iUQlXMdMZw",
+    authDomain: "safegdl.firebaseapp.com",
+    databaseURL: "https://safegdl.firebaseio.com",
+    projectId: "safegdl",
+    storageBucket: "safegdl.appspot.com",
+    messagingSenderId: "875742101171",
+    appId: "1:875742101171:web:a28ef31b5b978aa021fac6",
+    measurementId: "G-314F7CHNRG"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  var form = document.getElementById('form-autentification');
+  form.addEventListener('submit', autentificar)
+ 
+  function autentificar(e){
+    
+     e.preventDefault();
+     console.log("click");
+ 
+     var email = document.getElementById('email').value;
+     var password = document.getElementById('password').value;
+     console.log(email);
+     console.log(password); 
+      firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(function(result){
+          window.location.href = "inicio.html";
+     })
+     
+      .catch(function(error) {
+          if (email.length == 0||password.length==0){
+              $("#errormodalvacio").modal();
+            
+          }
+          else
+              $("#errormodal").modal();
+        });
+ 
+  }
+
+  function observador(){
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        // User is signed in.
+        console.log("existe usuario activo");
+        var displayName = user.displayName;
+        var email = user.email;
+        var emailVerified = user.emailVerified;
+        var photoURL = user.photoURL;
+        var isAnonymous = user.isAnonymous;
+        var uid = user.uid;
+        var providerData = user.providerData;
+        // ...
+      } else {
+        // User is signed out.
+        console.log("No existe usuario activo");
+      }
+    });
+  }
+  
+</script>
+</body>
+</html>
